@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { authService } from "../services/auth.service";
 import { AxiosError } from "axios";
+import { useAuth } from "../hooks/useAuth";
 
 export function LoginPage() {
   const navigate = useNavigate()
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -21,8 +22,7 @@ export function LoginPage() {
 
     try {
       setIsLoading(true);
-      const response = await authService.login({ email, password});
-      console.log(response);
+      await login(email, password);
       navigate('/platform');
     } catch(error: unknown) {
       console.log(error);

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import { createContext } from "react";
 import type { User } from "../types/api.types";
 
 interface AuthContextType {
@@ -9,12 +9,6 @@ interface AuthContextType {
   logout: () => void;
   isAuthenticated: boolean;
 }
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-export function AuthProvider({ children }: Readonly<{ children: React.ReactNode}>) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  
-}
+// Contexto de autenticación  EN UN FUTURO podríamos utilizar librerías cómo Zustand, Redux o React Query
+//Hammer
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);

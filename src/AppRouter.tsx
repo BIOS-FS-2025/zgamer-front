@@ -3,6 +3,8 @@ import { HomePage } from "./pages/HomePage"
 import { LoginPage } from "./pages/LoginPage"
 import { PlatformPage } from "./pages/PlatformPage"
 import { RegisterPage } from "./pages/RegisterPage"
+import { AuthProvider } from "./context/AuthProvider"
+import { ProtectedRoute } from "./components/ProtectedRoute"
 
 const router = createBrowserRouter([
   {
@@ -19,13 +21,25 @@ const router = createBrowserRouter([
   },
   {
     path: '/platform',
-    element: <PlatformPage />
+    element: (
+      <ProtectedRoute>
+        <PlatformPage />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: '*',
+    element: <HomePage />
   }
 ])
 
 function AppRouter() {
 
-  return <RouterProvider router={router} />
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+)
 }
 
 export default AppRouter

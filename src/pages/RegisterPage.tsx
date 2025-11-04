@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { authService } from "../services/auth.service";
+import { useAuth } from "../hooks/useAuth";
 
 export const RegisterPage = () => {
   const navigate = useNavigate()
+  const { register } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,8 +26,8 @@ export const RegisterPage = () => {
 
     try {
       setIsLoading(true);
-      await authService.register({ name, email, password});
-      navigate('/login');
+      await register(email, password, name);
+      navigate('/platform');
     } catch(err: any) {
       setError(err.response?.data?.message || 'Error al registrarse')
     } finally {
